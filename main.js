@@ -1,25 +1,16 @@
-
 const readline = require('readline');
 
-const figlet = require('figlet');
-const chalk = require('chalk');
+const {log, biglog, errorlog, colorize} = require("./out");
 
-//Mensaje inicial
-console.log(
-    chalk.green.bold(
-        figlet.textSync('CORE Quiz', {horizontalLayout: 'full'})
-    )
-);
+const cmds = require("./cmds");
 
-
-console.log("CORE Quiz");
-
+biglog('CORE Quiz', 'green');
 
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt: 'quiz> ',
+    prompt: colorize("quiz > ", 'blue'),
     completer: (line) => {
         const completions = 'h help add delete edit list test p play credits q quit'.split(' ');
         const hits = completions.filter((c) => c.startsWith(line));
@@ -44,121 +35,72 @@ rl
 
     case 'h':
     case 'help':
-        helpCmd();
+        cmds.helpCmd(rl);
         break;
 
     case 'quit':
     case 'q':
-        quitCmd();
+        cmds.quitCmd(rl);
         break;
 
     case 'add':
-        addCmd();
+        cmds.addCmd(rl);
         break;
 
     case 'list':
-        listCmd();
+        cmds.listCmd(rl);
         break;
 
     case 'show':
-        showCmd(args[1]);
+        cmds.showCmd(rl, args[1]);
         break;
 
     case 'test':
-        testCmd(args[1]);
+        cmds.testCmd(rl, args[1]);
         break;
 
     case 'play':
     case 'p':
-        playCmd();
+        cmds.playCmd(rl);
         break;
 
     case 'delete':
-        deleteCmd(args[1]);
+        cmds.deleteCmd(rl, args[1]);
         break;
 
     case 'edit':
-        editCmd(args[1]);
+        cmds.editCmd(rl, args[1]);
         break;
 
-
-
     case 'credits':
-        creditsCmd();
+        cmds.creditsCmd(rl);
 
         break;
 
     default:
-        console.log(`Comando desconocido: '${cmd}'`);
-        console.log(`Use 'help' para ver todos los comandos disponibles.`);
+        log(`Comando desconocido: '${colorize(cmd, 'red')}'`);
+        log(`Use ${colorize('help', 'green')} para ver todos los comandos disponibles.`);
         rl.prompt();
         break;
     }
 
 })
 .on('close', () => {
-    console.log('¡Adiós!');
+    log('¡Adiós!');
 process.exit(0);
 });
 
 const helpCmd = () => {
-    console.log("Comandos");
-    console.log(" h|help - Muestra esta ayuda.");
-    console.log(" list - Listar las quizzes existentes.");
-    console.log(" show <id> - Muestra la pregunta y la respuesta al quiz indicado");
-    console.log(" add - Añadir un nuevo quiz interactivamente.");
-    console.log(" delete <id> - Borrar el quiz indicado.");
-    console.log(" edit <id> - Editar el quiz indicado.");
-    console.log(" test <id> - probar el quiz indicado.");
-    console.log(" p|play - Jugar a preguntar aleatoriamente todos los quizzes.");
-    console.log(" credits - Créditos.");
-    console.log(' q|quit - salir del programa.');
+    log("Comandos");
+    log(" h|help - Muestra esta ayuda.");
+    log(" list - Listar las quizzes existentes.");
+    log(" show <id> - Muestra la pregunta y la respuesta al quiz indicado");
+    log(" add - Añadir un nuevo quiz interactivamente.");
+    log(" delete <id> - Borrar el quiz indicado.");
+    log(" edit <id> - Editar el quiz indicado.");
+    log(" test <id> - probar el quiz indicado.");
+    log(" p|play - Jugar a preguntar aleatoriamente todos los quizzes.");
+    log(" credits - Créditos.");
+    log(' q|quit - salir del programa.');
     rl.prompt();
-};
-
-const listCmd = () => {
-    console.log('Listar todos los quizzes existentes.');
-    rl.prompt();
-};
-
-const showCmd = id => {
-    console.log('Mostrar el quiz indicado');
-    rl.prompt();
-};
-
-const addCmd = () => {
-    console.log('Añadir un nuevo quiz.');
-    rl.prompt();
-};
-
-const deleteCmd = id => {
-    console.log('Borrar el quiz indicado.');
-    rl.prompt();
-};
-
-const editCmd = id => {
-    console.log('Editar el quiz indicado.');
-    rl.prompt();
-};
-
-const testCmd = id => {
-    console.log('probar el quiz indicado');
-    rl.prompt();
-};
-
-const playCmd = () => {
-    console.log('Jugar.');
-    rl.prompt();
-};
-
-const creditsCmd = () => {
-    console.log('Autores de la práctica:');
-    console.log('David Pisonero Fuentes');
-    console.log('Ignacio Ortega Lobo');
-    rl.prompt();
-};
-
-const quitCmd = () => {
-    rl.close();
-    //rl.prompt();
 };
