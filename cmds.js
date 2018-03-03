@@ -18,44 +18,141 @@ exports.helpCmd = rl => {
 
 
 exports.listCmd = rl => {
-    log('Listar todos los quizzes existentes.', 'red');
+    model.getAll().forEach((quiz, id) => {
+        log(`  [${colorize(id, 'magenta')}]: ${quiz.question}`);
+    });
     rl.prompt();
 };
 
 exports.showCmd = (rl, id) => {
-    log('Mostrar el quiz indicado', 'red');
+    if (typeof id==="undefined"){
+        errorlog(`Falta el parámetro id.`);
+    } else {
+        try{
+            const quiz = model.getByIndex(id);
+            log(` [${colorize(id, 'magenta')}]: ${quiz.question} ${colorize('=>', 'magenta')} ${quiz.answer}`);
+        } catch(error) {
+            errorlog(error.message);
+        }
+    }
     rl.prompt();
 };
 
 exports.addCmd = rl => {
-    log('Añadir un nuevo quiz.', 'red');
-    rl.prompt();
+    rl.question(colorize(' Introduzca una pregunta: ', 'red'), question => {
+        rl.question(colorize(' Introduzca la respuesta: ', 'red'), answer => {
+            model.add(question, answer);
+            log(` ${colorize('Se ha añadido', 'magenta')}: ${question} ${colorize('=>', 'magenta' )} ${answer}`);
+            rl.prompt();
+        });
+    });
 };
 
 exports.deleteCmd = (rl, id) => {
-    console.log('Borrar el quiz indicado.', 'red');
+    if (typeof id==="undefined"){
+        errorlog(`Falta el parámetro id.`);
+    } else {
+        try{
+            model.deleteByIndex(id);
+        } catch(error) {
+            errorlog(error.message);
+        }
+    }
     rl.prompt();
 };
 
 exports.editCmd = (rl, id) => {
-    console.log('Editar el quiz indicado.', 'red');
-    rl.prompt();
+    if (typeof id === "undefined") {
+        errorlog(`Falta el parámetro id.`);
+        rl.prompt();
+    } else {
+        try{
+            const quiz = model.getByIndex(id);
+            process.stdout.isTTY && setTimeout(() => {rl.write(quiz.question)},0);
+            rl.question(colorize(' Introduzca una pregunta: ', 'red'), question => {
+                process.stdout.isTTY && setTimeout(() => {rl.write(quiz.answer)},0);
+                rl.question(colorize(' Introduzca la respuesta: ', 'red'), answer => {
+                    model.update(id, question, answer);
+                    log(` Se ha cambiado el quiz ${colorize(id, 'magenta')} por: ${question} ${colorize('=>', 'magenta')} ${answer}`);
+                    rl.prompt();
+                });
+            });
+        } catch(error) {
+            errorlog(error.message);
+            rl.prompt();
+        }
+    }
 };
 
 exports.testCmd = (rl, id) => {
-    console.log('Probar el quiz indicado', 'red');
-    rl.prompt();
+    if (typeof id === "undefined") {
+        errorlog(`Falta el parámetro id.`);
+        rl.prompt();
+    } else {
+        try{
+            const quiz = model.getByIndex(id);
+            rl.question(colorize('¿', 'red')+colorize(quiz.question, 'red')+colorize('? ', 'red'), answer =>{
+                if(answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
+                    log('Su respuesta es:\n');
+                    biglog('Correcta', 'green');
+                    rl.prompt();
+                } else {
+                    log('Su respuesta es:\n');
+                    biglog('Incorrecta', 'red');
+                    rl.prompt();
+                }
+            });
+        } catch(error) {
+            errorlog(error.message);
+            rl.prompt();
+        }
+    }
 };
 
 exports.playCmd = rl => {
-    console.log('Jugar.', 'red');
-    rl.prompt();
+    let score = 0;
+    let toBeResolved = [];
+    for(var i=0; i<model.count(); i++){
+        toBeResolved.push(i);
+    }
+        if (toBeResolved.length === 0) {
+            errorlog('No hay ninguna pregunta');
+            rl.prompt();
+        } else {
+            const playOne = () => {
+                if(toBeResolved.length === 0){
+                    log('Su puntuación es ' + score);
+                    log('Has terminado todas las preguntas.');
+                    rl.prompt();
+                } else {
+                    var id = Math.floor(Math.random() * toBeResolved.length);
+                    let quiz = model.getByIndex(toBeResolved[id]);
+                    toBeResolved.splice(id, 1);
+                    rl.question(colorize('¿', 'red') + colorize(quiz.question, 'red') + colorize('? ', 'red'), answer => {
+                        if (answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
+                            log('Su respuesta es:\n');
+                            biglog('Correcta', 'green');
+                            score++;
+                            //var index = toBeResolved.indexOf(id);
+                            playOne();
+                        } else {
+                            log('Su respuesta es:\n');
+                            biglog('Incorrecta', 'red');
+                            log('El juego ha terminado');
+                            log('Su puntuación es ' + score);
+                            rl.prompt();
+                        }
+                    });
+                }
+            }
+        playOne();
+    }
 };
 
 exports.creditsCmd = rl => {
-    console.log('Autores de la práctica:');
-    console.log('David Pisonero Fuentes', 'green');
-    console.log('Ignacio Ortega Lobo', 'green');
+    log('Autores de la práctica:');
+    log('David Pisonero Fuentes', 'green');
+    log('Ignacio Ortega Lobo', 'green');
     rl.prompt();
 };
 

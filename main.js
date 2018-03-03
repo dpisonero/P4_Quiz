@@ -89,18 +89,3 @@ rl
     log('¡Adiós!');
 process.exit(0);
 });
-
-const helpCmd = () => {
-    log("Comandos");
-    log(" h|help - Muestra esta ayuda.");
-    log(" list - Listar las quizzes existentes.");
-    log(" show <id> - Muestra la pregunta y la respuesta al quiz indicado");
-    log(" add - Añadir un nuevo quiz interactivamente.");
-    log(" delete <id> - Borrar el quiz indicado.");
-    log(" edit <id> - Editar el quiz indicado.");
-    log(" test <id> - probar el quiz indicado.");
-    log(" p|play - Jugar a preguntar aleatoriamente todos los quizzes.");
-    log(" credits - Créditos.");
-    log(' q|quit - salir del programa.');
-    rl.prompt();
-};

@@ -1,3 +1,7 @@
+const fs = require("fs");
+
+const DB_FILENAME = "quizzes.json";
+
 let quizzes = [
     {
         question: "Capital de Italia",
@@ -17,7 +21,30 @@ let quizzes = [
     }
 ];
 
-exports.count = () => quizzes.legth;
+const load = () => {
+    fs.readFile(DB_FILENAME, (err, data) => {
+        if (err) {
+            if (err.code === "ENOENT") {
+                save();
+                return;
+            }
+            throw err;
+        }
+        let json = JSON.parse(data);
+        if (json){
+            quizzes = json;
+        }
+    });
+};
+
+const save = () => {
+    fs.writeFile(DB_FILENAME,
+        JSON.stringify(quizzes),
+        err => {
+            if (err) throw err;
+        });
+};
+exports.count = () => quizzes.length;
 
 exports.add = (question, answer) => {
 
@@ -25,6 +52,7 @@ exports.add = (question, answer) => {
         question: (question || "").trim(),
         answer: (answer || "").trim()
     });
+    save();
 };
 
 exports.update = (id, question, answer) => {
@@ -37,6 +65,7 @@ exports.update = (id, question, answer) => {
         question: (question || "").trim(),
         answer: (answer || "").trim()
     });
+    save();
 };
 
 exports.getAll = () => JSON.parse(JSON.stringify(quizzes));
@@ -57,4 +86,7 @@ exports.deleteByIndex = id => {
         throw new Error(`El valor del parámetro id no es válido.`);
     }
     quizzes.splice(id, 1);
+    save();
 };
+
+load();
