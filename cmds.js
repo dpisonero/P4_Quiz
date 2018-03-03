@@ -93,12 +93,12 @@ exports.testCmd = (rl, id) => {
             const quiz = model.getByIndex(id);
             rl.question(colorize('¿', 'red')+colorize(quiz.question, 'red')+colorize('? ', 'red'), answer =>{
                 if(answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
-                    log('Su respuesta es:\n');
-                    biglog('Correcta', 'green');
+                    log('Su respuesta es correcta');
+                    //biglog('Correcta', 'green');
                     rl.prompt();
                 } else {
-                    log('Su respuesta es:\n');
-                    biglog('Incorrecta', 'red');
+                    log('Su respuesta es incorrecta');
+                    //biglog('Incorrecta', 'red');
                     rl.prompt();
                 }
             });
@@ -130,14 +130,14 @@ exports.playCmd = rl => {
                     toBeResolved.splice(id, 1);
                     rl.question(colorize('¿', 'red') + colorize(quiz.question, 'red') + colorize('? ', 'red'), answer => {
                         if (answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
-                            log('Su respuesta es:\n');
-                            biglog('Correcta', 'green');
+                            log('Su respuesta es: correcta');
+                            //biglog('Correcta', 'green');
                             score++;
                             //var index = toBeResolved.indexOf(id);
                             playOne();
                         } else {
-                            log('Su respuesta es:\n');
-                            biglog('Incorrecta', 'red');
+                            log('Su respuesta es incorrecta\n');
+                            //biglog('Incorrecta', 'red');
                             log('El juego ha terminado');
                             log('Su puntuación es ' + score);
                             rl.prompt();
