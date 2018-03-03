@@ -122,7 +122,7 @@ exports.playCmd = rl => {
             const playOne = () => {
                 if(toBeResolved.length === 0){
                     log('Su puntuación es ' + score);
-                    log('Has terminado todas las preguntas.');
+                    log('Fin, has terminado todas las preguntas.');
                     rl.prompt();
                 } else {
                     var id = Math.floor(Math.random() * toBeResolved.length);
@@ -138,7 +138,7 @@ exports.playCmd = rl => {
                         } else {
                             log('Su respuesta es incorrecta\n');
                             //biglog('Incorrecta', 'red');
-                            log('El juego ha terminado');
+                            log('Fin, el juego ha terminado');
                             log('Su puntuación es ' + score);
                             rl.prompt();
                         }
