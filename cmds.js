@@ -172,45 +172,58 @@ exports.testCmd = (rl, id) => {
     });
 };
 
-exports.playCmd = rl => {
-    let score = 0;
-    let toBeResolved = [];
-    for(var i=0; i<model.count(); i++){
-        toBeResolved.push(i);
-    }
-        if (toBeResolved.length === 0) {
-            errorlog('No hay ninguna pregunta');
-            rl.prompt();
+const validateAray = ar => {
+
+    return new Sequelize.Promise((resolve, reject) => {
+        if (ar.length === 0) {
+            reject(new Error(`No hay una pregunta`));
         } else {
-            const playOne = () => {
-                if(toBeResolved.length === 0){
-                    log('Su puntuación es ' + score);
-                    log('Fin, has terminado todas las preguntas.');
-                    rl.prompt();
-                } else {
-                    var id = Math.floor(Math.random() * toBeResolved.length);
-                    let quiz = model.getByIndex(toBeResolved[id]);
-                    toBeResolved.splice(id, 1);
-                    rl.question(colorize('¿', 'red') + colorize(quiz.question, 'red') + colorize('? ', 'red'), answer => {
-                        if (answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
-                            log('Su respuesta es: correcta');
-                            //biglog('Correcta', 'green');
-                            score++;
-                            //var index = toBeResolved.indexOf(id);
-                            playOne();
-                        } else {
-                            log('Su respuesta es incorrecta\n');
-                            //biglog('Incorrecta', 'red');
-                            log('Fin, el juego ha terminado');
-                            log('Su puntuación es ' + score);
-                            rl.prompt();
-                        }
-                    });
-                }
-            }
-        playOne();
-    }
+            resolve(ar);
+        }
+    });
 };
+
+//exports.playCmd = rl => {
+//    let score = 0;
+//    let toBeResolved = [];
+//    for(let i=0; i<models.quiz.count(); i++){
+//        toBeResolved.push(i);
+//    }
+//    validateAray(toBeResolved)
+//    .then();
+//        if (toBeResolved.length === 0) {
+//            errorlog('No hay ninguna pregunta');
+//            rl.prompt();
+//        } else {
+ //           const playOne = () => {
+//                if(toBeResolved.length === 0){
+//                    log('Su puntuación es ' + score);
+//                    log('Fin, has terminado todas las preguntas.');
+//                    rl.prompt();
+ //               } else {
+//                    let id = Math.floor(Math.random() * toBeResolved.length);
+//                    let quiz = models.quiz.findById(toBeResolved[id]);
+//                    toBeResolved.splice(id, 1);
+//                    rl.question(colorize('¿', 'red') + colorize(quiz.question, 'red') + colorize('? ', 'red'), answer => {
+//                        if (answer.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
+//                            log('Su respuesta es: correcta');
+//                            //biglog('Correcta', 'green');
+ //                           score++;
+                            //var index = toBeResolved.indexOf(id);
+ //                           playOne();
+ //                       } else {
+ //                           log('Su respuesta es incorrecta\n');
+ //                           //biglog('Incorrecta', 'red');
+ //                           log('Fin, el juego ha terminado');
+ //                           log('Su puntuación es ' + score);
+ //                           rl.prompt();
+ //                       }
+ //                   });
+ //               }
+ //           };
+ //       playOne();
+ //   }
+//};
 
 exports.creditsCmd = rl => {
     log('Autores de la práctica:');
