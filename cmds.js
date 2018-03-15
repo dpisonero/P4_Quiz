@@ -161,7 +161,7 @@ exports.testCmd = (rl, id) => {
             } else {
                 log('Su respuesta es incorrecta');
             }
-            return quiz;
+            //return quiz;
         });
     })
     .catch(error => {
