@@ -165,7 +165,7 @@ exports.testCmd = (rl, id) => {
         });
     })
     .catch(error => {
-        log(error.message);
+        errorlog(error.message);
     })
     .then(() => {
         rl.prompt();
