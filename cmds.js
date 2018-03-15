@@ -164,6 +164,9 @@ exports.testCmd = (rl, id) => {
             return quiz;
         });
     })
+    .then(() => {
+        rl.prompt();
+    })
     .catch(error => {
         errorlog(error.message);
     })
