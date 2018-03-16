@@ -164,9 +164,6 @@ exports.testCmd = (rl, id) => {
             return quiz;
         });
     })
-    .then(() => {
-        rl.prompt();
-    })
     .catch(error => {
         errorlog(error.message);
     })
@@ -182,14 +179,13 @@ exports.playCmd = rl => {
         .each(quiz => {
             toBeResolved.push(quiz.id);
         })
-        .then(quiz => {
+        .then(() => {
             if (toBeResolved.length === 0) {
                 errorlog('No hay ninguna pregunta');
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        log('Su puntuación es ' + score + ' Fin , has terminado todas las preguntas.');
-                        //log('Fin, has terminado todas las preguntas.');
+                        log('Su puntuación es ' + score + '\n Fin, has terminado todas las preguntas.');
                         rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
@@ -204,9 +200,7 @@ exports.playCmd = rl => {
                                             log('Su respuesta es correcta');
                                             score++; playOne();
                                         } else {
-                                            log('Su respuesta es incorrecta . Fin , el juego ha terminado Su puntuación es ' + score);
-                                            //log('Fin, el juego ha terminado');
-                                            //log('Su puntuación es ' + score);
+                                            log('Su respuesta es incorrecta.\n Su puntuación es ' + score + '\n Fin, el juego ha terminado.');
                                             rl.prompt();
                                         }
                                         return quiz;
