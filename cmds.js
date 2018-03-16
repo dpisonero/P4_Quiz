@@ -161,7 +161,7 @@ exports.testCmd = (rl, id) => {
                 rl.prompt();
             } else {
                 log('Su respuesta es incorrecta');
-                rl.prompt();
+                //rl.prompt();
             }
             return quiz;
         });
