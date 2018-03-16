@@ -202,7 +202,7 @@ exports.playCmd = rl => {
                                             log('Su respuesta es correcta');
                                             score++; playOne();
                                         } else {
-                                            log('Su respuesta es incorrecta.\n Su puntuación es ' + score + '\n Fin, el juego ha terminado.');
+                                            log('Su respuesta es incorrecta .\n Su puntuación es ' + score + '\n Fin , el juego ha terminado.');
                                             rl.prompt();
                                         }
                                         return quiz;
