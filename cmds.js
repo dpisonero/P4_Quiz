@@ -158,8 +158,10 @@ exports.testCmd = (rl, id) => {
         .then(a => {
             if(a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
                 log('Su respuesta es correcta');
+                rl.prompt();
             } else {
                 log('Su respuesta es incorrecta');
+                rl.prompt();
             }
             return quiz;
         });
