@@ -157,10 +157,10 @@ exports.testCmd = (rl, id) => {
         return makeQuestion(rl, '¿'+quiz.question+'?')
         .then(a => {
             if(a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
-                log('Su respuesta es correcta');
+                log('correcta');
                 rl.prompt();
             } else {
-                log('Su respuesta es incorrecta ');
+                log('incorrecta ');
                 rl.prompt();
             }
             return quiz;
@@ -187,7 +187,7 @@ exports.playCmd = rl => {
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        log('Su puntuación es ' + score + '\n Fin , has terminado todas las preguntas.');
+                        log('Su puntuación es ' + score + ' Fin ');
                         rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
@@ -199,10 +199,10 @@ exports.playCmd = rl => {
                                 return makeQuestion(rl, '¿' + quiz.question + '?')
                                     .then(a => {
                                         if (a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
-                                            log('Su respuesta es correcta');
+                                            log('correcta');
                                             score++; playOne();
                                         } else {
-                                            log('Su respuesta es incorrecta .\n Su puntuación es ' + score + '\n Fin , el juego ha terminado.');
+                                            log('incorrecta . Su puntuación es ' + score + ' Fin ');
                                             rl.prompt();
                                         }
                                         return quiz;
