@@ -160,7 +160,7 @@ exports.testCmd = (rl, id) => {
                 console.log('correcta');
                 rl.prompt();
             } else {
-                console.log('incorrecta ');
+                console.log('ncorrecta');
                 rl.prompt();
             }
             return quiz;
@@ -187,7 +187,7 @@ exports.playCmd = rl => {
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        console.log('Su puntuación es ' + score + ' Fin ');
+                        console.log('Fin Su puntuación es ' + score + ' Fin ');
                         rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
@@ -202,7 +202,7 @@ exports.playCmd = rl => {
                                             console.log('correcta');
                                             score++; playOne();
                                         } else {
-                                            console.log('incorrecta . Su puntuación es ' + score + ' Fin ');
+                                            console.log('incorrecta . Fin Su puntuación es ' + score);
                                             rl.prompt();
                                         }
                                         return quiz;
