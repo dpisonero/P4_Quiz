@@ -187,7 +187,7 @@ exports.playCmd = rl => {
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        console.log('Fin Su puntuación es ' + score + ' Fin ');
+                        console.log('Fin Su puntuación es ' + score);
                         rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
