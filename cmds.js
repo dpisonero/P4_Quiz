@@ -187,7 +187,7 @@ exports.playCmd = rl => {
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        log('Su puntuación es ' + score + ' Fin ');
+                        console.log('Su puntuación es ' + score + ' Fin ');
                         rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
@@ -199,10 +199,10 @@ exports.playCmd = rl => {
                                 return makeQuestion(rl, '¿' + quiz.question + '?')
                                     .then(a => {
                                         if (a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
-                                            log('correcta');
+                                            console.log('correcta');
                                             score++; playOne();
                                         } else {
-                                            log('incorrecta . Su puntuación es ' + score + ' Fin ');
+                                            console.log('incorrecta . Su puntuación es ' + score + ' Fin ');
                                             rl.prompt();
                                         }
                                         return quiz;
