@@ -157,10 +157,10 @@ exports.testCmd = (rl, id) => {
         return makeQuestion(rl, '¿'+quiz.question+'?')
         .then(a => {
             if(a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
-                log('correcta');
+                console.log('correcta');
                 rl.prompt();
             } else {
-                log('incorrecta ');
+                console.log('incorrecta ');
                 rl.prompt();
             }
             return quiz;
