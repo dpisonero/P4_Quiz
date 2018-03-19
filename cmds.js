@@ -160,7 +160,7 @@ exports.testCmd = (rl, id) => {
                 console.log('correcta');
                 rl.prompt();
             } else {
-                console.log('ncorrecta');
+                console.log('incorrecta');
                 rl.prompt();
             }
             return quiz;
