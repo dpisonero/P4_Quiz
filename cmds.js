@@ -105,7 +105,7 @@ exports.deleteCmd = (rl, id) => {
     validateId(id)
     .then(id => models.quiz.destroy({where: {id}}))
     .catch(error => {
-        errorlog(error.message);
+        errorlog(socket, error.message);
     })
     .then(() => {
         rl.prompt();
@@ -157,11 +157,11 @@ exports.testCmd = (socket, rl, id) => {
         return makeQuestion(rl, '¿'+quiz.question+'?')
         .then(a => {
             if(a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()){
-                console.log(socket, 'correcta');
-                rl.prompt();
+                log(socket, 'correcta');
+                //rl.prompt();
             } else {
-                console.log(socket, 'incorrecta');
-                rl.prompt();
+                log(socket, 'incorrecta');
+                //rl.prompt();
             }
             return quiz;
         });
@@ -187,8 +187,8 @@ exports.playCmd = (socket, rl) => {
             } else {
                 const playOne = () => {
                     if (toBeResolved.length === 0) {
-                        console.log(socket, 'Fin Su puntuación es ' + score);
-                        rl.prompt();
+                        log(socket, 'Fin Su puntuación es ' + score);
+                        //rl.prompt();
                     } else {
                         let x = Math.floor(Math.random() * toBeResolved.length);
                         let id = toBeResolved[x];
@@ -199,11 +199,11 @@ exports.playCmd = (socket, rl) => {
                                 return makeQuestion(rl, '¿' + quiz.question + '?')
                                     .then(a => {
                                         if (a.trim().toLowerCase() === quiz.answer.trim().toLowerCase()) {
-                                            console.log(socket, 'correcta');
+                                            log(socket, 'correcta');
                                             score++; playOne();
                                         } else {
-                                            console.log(socket, 'incorrecta . Fin Su puntuación es ' + score);
-                                            rl.prompt();
+                                            log(socket, 'incorrecta . Fin Su puntuación es ' + score);
+                                            //rl.prompt();
                                         }
                                         return quiz;
                                     });
